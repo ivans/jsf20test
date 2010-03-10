@@ -5,8 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="USERS")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -15,6 +17,8 @@ public class User implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
+    private String username;
+    private String password;
 
     @Override
     public int hashCode() {
@@ -63,5 +67,21 @@ public class User implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

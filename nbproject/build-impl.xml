@@ -538,7 +538,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${libs.jsf20.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.jstl11.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.hibernate-support.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.derbyclient.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <!--<copyfiles files="${file.reference.derbyclient.jar}" todir="${build.web.dir}/WEB-INF/lib"/>-->
     </target>
     <target depends="init" if="dist.ear.dir" name="-clean-webinf-lib">
         <delete dir="${build.web.dir}/WEB-INF/lib"/>
