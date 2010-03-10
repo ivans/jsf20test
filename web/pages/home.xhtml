@@ -35,16 +35,43 @@
 
         <hr/>
 
-        <p:dataTable value="#{bean1.allUsers}" var="user">
-            <p:column sortBy="#{user.firstName}">
-                <f:facet name="header">Ime</f:facet>
-                #{user.firstName}
-            </p:column>
-            <p:column sortBy="#{user.lastName}">
-                <f:facet name="header">Prezime</f:facet>
-                #{user.lastName}
-            </p:column>
-        </p:dataTable>
+        <h:form id="usersForm">
+            <p:dataTable id="usersTable" value="#{bean1.allUsers}" var="user" selection="#{bean1.selectedUser}" selectionMode="single" update="display" onselectComplete="userDialog.show()">
+                <p:column sortBy="#{user.firstName}">
+                    <f:facet name="header">Ime</f:facet>
+                    #{user.firstName}
+                </p:column>
+                <p:column sortBy="#{user.lastName}">
+                    <f:facet name="header">Prezime</f:facet>
+                    #{user.lastName}
+                </p:column>
+                <p:column sortBy="#{user.username}">
+                    <f:facet name="header">Korisničko ime</f:facet>
+                    #{user.username}
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog id="userDialog" header="Detalji o korisniku" widgetVar="userDialog" visible="false"
+                  modal="false" draggable="true" resizable="true" fixedCenter="true">
+
+            <h:panelGroup id="display">
+                <h:form prependId="true">
+                    <h:panelGrid  columns="2">
+                        <h:outputText value="Ime:" />
+                        <h:outputText value="#{bean1.selectedUser.firstName}" style="font-weight:bold"/>
+
+                        <h:outputText value="Prezime:" />
+                        <h:outputText value="#{bean1.selectedUser.lastName}" style="font-weight:bold"/>
+
+                        <h:outputText value="Korisničko ime:" />
+                        <h:inputText value="#{bean1.selectedUser.username}" style="font-weight:bold"/>
+
+                        <p:commandButton value="Save" update="usersForm" action="#{bean1.saveSelectedUser}"/>
+                    </h:panelGrid>
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
 
         <hr/>
 

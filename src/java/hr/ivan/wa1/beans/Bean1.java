@@ -10,6 +10,7 @@ import hr.ivan.wa1.qualifiers.LoggedIn;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
+import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.context.ConversationScoped;
@@ -18,6 +19,7 @@ import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.Transient;
 import org.jboss.weld.conversation.ConversationManager;
 
 /**
@@ -25,7 +27,7 @@ import org.jboss.weld.conversation.ConversationManager;
  * @author ivans
  */
 @Named("bean1")
-@ConversationScoped
+@SessionScoped
 public class Bean1 implements Serializable {
 
     @Inject
@@ -33,8 +35,9 @@ public class Bean1 implements Serializable {
     @Inject
     @LoggedIn
     User currentUser;
-    @Inject
+    @EJB
     UserDao userDao;
+    private User selectedUser;
 
     public String getTrenutniUser() {
         return currentUser != null ? currentUser.toString() : "Nema korisnika";
@@ -53,5 +56,19 @@ public class Bean1 implements Serializable {
 
     public List<User> getAllUsers() {
         return userDao.findAllUsers();
+    }
+
+    public String saveSelectedUser() {
+        System.out.println("Saving user " + selectedUser.getUsername());
+        userDao.save(selectedUser);
+        return "";
+    }
+
+    public User getSelectedUser() {
+        return selectedUser;
+    }
+
+    public void setSelectedUser(User selectedUser) {
+        this.selectedUser = selectedUser;
     }
 }
