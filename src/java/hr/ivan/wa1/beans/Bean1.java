@@ -4,6 +4,8 @@
  */
 package hr.ivan.wa1.beans;
 
+import hr.ivan.wa1.model.User;
+import hr.ivan.wa1.qualifiers.LoggedIn;
 import java.io.Serializable;
 import java.util.Random;
 import javax.enterprise.context.Conversation;
@@ -25,11 +27,14 @@ import org.jboss.weld.conversation.ConversationManager;
 public class Bean1 implements Serializable {
 
     private String naziv = "ovo je neki naziv";
-
     @Inject
     private Event<FieldAccess> fieldAccess;
+    @Inject
+    @LoggedIn
+    User currentUser;
 
     public String getNaziv() {
+        naziv = "Trenutni user: " + currentUser;
         fieldAccess.fire(new FieldAccess("get", naziv));
         return naziv;
     }
@@ -42,12 +47,11 @@ public class Bean1 implements Serializable {
     public void observerFieldAccess(@Observes FieldAccess fa) {
         System.out.println("Accessed field: " + fa);
     }
-
     private Random rand = new Random();
 
-    @Produces @Named("randomBroj")
+    @Produces
+    @Named("randomBroj")
     public String getNekiBroj() {
         return Integer.toString(rand.nextInt());
     }
-
 }
