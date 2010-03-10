@@ -4,9 +4,11 @@
  */
 package hr.ivan.wa1.beans;
 
+import hr.ivan.wa1.data.dao.UserDao;
 import hr.ivan.wa1.model.User;
 import hr.ivan.wa1.qualifiers.LoggedIn;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Random;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.SessionScoped;
@@ -31,6 +33,8 @@ public class Bean1 implements Serializable {
     @Inject
     @LoggedIn
     User currentUser;
+    @Inject
+    UserDao userDao;
 
     public String getTrenutniUser() {
         return currentUser != null ? currentUser.toString() : "Nema korisnika";
@@ -45,5 +49,9 @@ public class Bean1 implements Serializable {
     @Named("randomBroj")
     public String getNekiBroj() {
         return Integer.toString(rand.nextInt());
+    }
+
+    public List<User> getAllUsers() {
+        return userDao.findAllUsers();
     }
 }
