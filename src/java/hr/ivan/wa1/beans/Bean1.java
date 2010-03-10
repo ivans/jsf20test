@@ -26,22 +26,14 @@ import org.jboss.weld.conversation.ConversationManager;
 @ConversationScoped
 public class Bean1 implements Serializable {
 
-    private String naziv = "ovo je neki naziv";
     @Inject
     private Event<FieldAccess> fieldAccess;
     @Inject
     @LoggedIn
     User currentUser;
 
-    public String getNaziv() {
-        naziv = "Trenutni user: " + currentUser;
-        fieldAccess.fire(new FieldAccess("get", naziv));
-        return naziv;
-    }
-
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
-        fieldAccess.fire(new FieldAccess("set", naziv));
+    public String getTrenutniUser() {
+        return currentUser != null ? currentUser.toString() : "Nema korisnika";
     }
 
     public void observerFieldAccess(@Observes FieldAccess fa) {

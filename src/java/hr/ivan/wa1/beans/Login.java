@@ -1,10 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package hr.ivan.wa1.beans;
 
 import hr.ivan.wa1.model.User;
+import hr.ivan.wa1.qualifiers.JsfTestDatabase;
 import hr.ivan.wa1.qualifiers.LoggedIn;
 import java.io.Serializable;
 import java.util.List;
@@ -15,7 +12,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -27,7 +23,8 @@ public class Login implements Serializable {
 
     @Inject
     Credentials credentials;
-    @PersistenceContext
+    @Inject
+    @JsfTestDatabase
     EntityManager entityManager;
     private User user;
 
