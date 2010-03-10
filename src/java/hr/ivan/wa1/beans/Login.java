@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -39,7 +41,7 @@ public class Login implements Serializable {
         if (!results.isEmpty()) {
             user = results.get(0);
         } else {
-            // perhaps add code here to report a failed login
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Nije pronađen korisnik!"));
         }
     }
 
